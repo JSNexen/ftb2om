@@ -10,8 +10,12 @@ Enter the following:
 [in file] is the file you're converting.
 [out file] is the file where the text comes out.
 [bpm] is the first bpm of the file.
+Don't include brackets. :V
 
 If you do it right, you should get a file with some text in it.
-Now make a new file in osu, and open up the .osu file that appears in Notepad.
+Now make a new file in osu.
+Make sure the beatmap is set to osu!mania only.
+Set the number of keys to 7, in the difficulty tab.
+Save it, and open up the .osu file in Notepad.
 Paste the text in. It should be obvious where to paste it in.
 Reload the file in osu and all the notes should be there. You might have to fiddle with offset and bpm changes.
