@@ -45,7 +45,7 @@ public class ConverterMain {
                     else if (readLine.startsWith("BPM")) {
                         String[] bpmData = readLine.split(" ");
                         bpms.add(new BPM(
-                                Integer.parseInt(bpmData[1]),
+                                (int) Math.round(Double.parseDouble(bpmData[1])),
                                 mainBpm * Double.parseDouble(bpmData[2]) / 120
                         ));
                     } else {
@@ -61,7 +61,10 @@ public class ConverterMain {
                 writer.println("[TimingPoints]");
                 while (!bpms.isEmpty()) {
                     BPM bpm = bpms.remove();
-                    writer.println(bpm.getTime() + "," + 60000 / bpm.getValue() + ",4,1,0,100,1,0");
+                    writer.println(bpm.getTime() + ","
+                            + 60000 / ((bpm.getValue() != 0) ? bpm.getValue() : 0.01)
+                            + ",4,1,0,100,1,0"
+                    );
                 }
                 writer.println();
                 writer.println("[HitObjects]");
