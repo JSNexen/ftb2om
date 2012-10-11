@@ -1,3 +1,8 @@
+v0.1a update:
+- Holy shit it's an exe now.
+- ftb2om.exe [in file] [out file] [bpm]
+- You still need Java installed, though.
+
 v0.1 Update:
 - Holds work.
 - Due to osu's limitations with speed changes, make sure your holds don't intersect speed changes.
