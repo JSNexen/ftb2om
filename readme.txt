@@ -1,3 +1,10 @@
+v0.1 Update:
+- Holds work.
+- Due to osu's limitations with speed changes, make sure your holds don't intersect speed changes.
+  This includes stops.
+- Holds cannot end in other notes. This is an obvious one.
+- The code is messy and I need to clean it up. This was literally something I shat out in less than a day.
+
 How to use:
 
 Make sure java is installed.

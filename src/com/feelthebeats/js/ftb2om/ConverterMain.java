@@ -1,8 +1,7 @@
 package com.feelthebeats.js.ftb2om;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class ConverterMain {
 
@@ -21,8 +20,8 @@ public class ConverterMain {
 
     private static double mainBpm;
 
-    private static Queue<BPM> bpms;
-    private static Queue<Note> notes;
+    private static LinkedList<BPM> bpms;
+    private static LinkedList<Note> notes;
 
     public static void main(String[] args) {
         System.out.println(MSG_GREET);
@@ -50,10 +49,28 @@ public class ConverterMain {
                         ));
                     } else {
                         String[] noteData = readLine.split(" ");
-                        String noteTime = (noteData[0].split("-"))[0];
+                        String[] noteTimeData = noteData[0].split("-");
+                        double beatLength = 0;
+                        int noteTimeStart = (int) Math.round(Double.parseDouble(noteTimeData[0]));
+                        if (noteTimeData.length > 1) {
+                            int noteTimeEnd = (int) Math.round(Double.parseDouble(noteTimeData[1]));
+                            boolean bpmFound = false;
+                            for (ListIterator<BPM> bpmIterator = bpms.listIterator(); bpmIterator.hasNext(); ) {
+                                BPM bpm = bpmIterator.next();
+                                if (bpm.getTime() > noteTimeStart) {
+                                    bpm = bpmIterator.previous();
+                                    bpm = bpmIterator.previous();
+                                    double noteTimeLength = (noteTimeEnd - noteTimeStart);
+                                    beatLength = noteTimeLength * bpm.getValue() / 60000;
+                                    bpmFound = true;
+                                }
+                                if (bpmFound) break;
+                            }
+                        }
                         notes.add(new Note(
-                                (int) Math.round(Double.parseDouble(noteTime)),
-                                Integer.parseInt(noteData[2])
+                                noteTimeStart,
+                                Integer.parseInt(noteData[2]),
+                                beatLength
                         ));
                     }
                 }
@@ -72,7 +89,12 @@ public class ConverterMain {
                     Note note = notes.remove();
                     int noteX = (512 / 14) * ((note.getColumn() - 1) * 2 + 1);
                     int noteY = 192;
-                    writer.println(noteX + "," + noteY + "," + note.getTime() + ",1,0");
+                    writer.println(noteX + ","
+                            + noteY + ","
+                            + note.getTime()
+                            + ((note.getBeatLength() > 0)
+                            ? (",2,0,B|" + noteX + ":32,8," + note.getBeatLength() * 70/4) : ",1,0")
+                    );
                 }
                 writer.close();
                 reader.close();

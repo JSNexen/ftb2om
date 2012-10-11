@@ -8,10 +8,12 @@ package com.feelthebeats.js.ftb2om;
 public class Note {
     private final int time;
     private final int column;
+    private final double beatLength;
 
-    public Note(int time, int column) {
+    public Note(int time, int column, double beatLength) {
         this.time = time;
         this.column = column;
+        this.beatLength = beatLength;
     }
 
     public int getTime() {
@@ -20,5 +22,9 @@ public class Note {
 
     public int getColumn() {
         return column;
+    }
+
+    public double getBeatLength() {
+        return beatLength;
     }
 }
