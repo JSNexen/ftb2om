@@ -55,15 +55,13 @@ public class ConverterMain {
                         if (noteTimeData.length > 1) {
                             int noteTimeEnd = (int) Math.round(Double.parseDouble(noteTimeData[1]));
                             boolean bpmFound = false;
-                            for (ListIterator<BPM> bpmIterator = bpms.listIterator(); bpmIterator.hasNext(); ) {
+                            for (Iterator<BPM> bpmIterator = bpms.descendingIterator(); bpmIterator.hasNext(); ) {
                                 BPM bpm = bpmIterator.next();
-                                if (bpms.size() > 1 && bpm.getTime() > noteTimeStart) {
-                                    bpm = bpmIterator.previous();
-                                    bpm = bpmIterator.previous();
+                                if (bpm.getTime() <= noteTimeStart) {
+                                    double noteTimeLength = (noteTimeEnd - noteTimeStart);
+                                    beatLength = noteTimeLength * bpm.getValue() / 60000;
                                     bpmFound = true;
                                 }
-                                double noteTimeLength = (noteTimeEnd - noteTimeStart);
-                                beatLength = noteTimeLength * bpm.getValue() / 60000;
                                 if (bpmFound) break;
                             }
                         }
