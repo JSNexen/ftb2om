@@ -57,13 +57,13 @@ public class ConverterMain {
                             boolean bpmFound = false;
                             for (ListIterator<BPM> bpmIterator = bpms.listIterator(); bpmIterator.hasNext(); ) {
                                 BPM bpm = bpmIterator.next();
-                                if (bpm.getTime() > noteTimeStart) {
+                                if (bpms.size() > 1 && bpm.getTime() > noteTimeStart) {
                                     bpm = bpmIterator.previous();
                                     bpm = bpmIterator.previous();
-                                    double noteTimeLength = (noteTimeEnd - noteTimeStart);
-                                    beatLength = noteTimeLength * bpm.getValue() / 60000;
                                     bpmFound = true;
                                 }
+                                double noteTimeLength = (noteTimeEnd - noteTimeStart);
+                                beatLength = noteTimeLength * bpm.getValue() / 60000;
                                 if (bpmFound) break;
                             }
                         }
@@ -93,7 +93,7 @@ public class ConverterMain {
                             + noteY + ","
                             + note.getTime()
                             + ((note.getBeatLength() > 0)
-                            ? (",2,0,B|" + noteX + ":32,8," + note.getBeatLength() * 70/4) : ",1,0")
+                            ? (",2,0,B|" + noteX + ":32,8," + note.getBeatLength() * 70 / 4) : ",1,0")
                     );
                 }
                 writer.close();
